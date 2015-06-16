@@ -2,8 +2,11 @@ package com.airhacks.doit.business.reminders.boundary;
 
 import com.airhacks.rulz.jaxrsclient.JAXRSClientProvider;
 import static com.airhacks.rulz.jaxrsclient.JAXRSClientProvider.buildWithURI;
+import javax.json.Json;
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import javax.json.JsonObjectBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import static org.hamcrest.CoreMatchers.is;
@@ -24,7 +27,18 @@ public class TodosResourceIT {
 
     @Test
     public void crud() {
-        Response response = this.provider.target().request(MediaType.APPLICATION_JSON).get();
+        JsonObjectBuilder todoBuilder = Json.createObjectBuilder();
+        JsonObject todoToCreate = todoBuilder.
+                add("caption", "implement").
+                add("priority", 42).
+                build();
+        Response postResponse = this.provider.target().request().
+                post(Entity.json(todoToCreate));
+        assertThat(postResponse.getStatus(), is(204));
+
+        Response response = this.provider.target().
+                request(MediaType.APPLICATION_JSON).
+                get();
         assertThat(response.getStatus(), is(200));
         JsonArray allTodos = response.readEntity(JsonArray.class);
         System.out.println("payload " + allTodos);
