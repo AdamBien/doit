@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class ToDo {
 
+    private long id;
     private String caption;
     private String description;
     private int priority;
