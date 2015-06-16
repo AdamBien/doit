@@ -21,9 +21,10 @@ public class TodosResourceIT {
 
     @Test
     public void fetchToDos() {
-        Response response = this.provider.target().request(MediaType.TEXT_PLAIN).get();
+        Response response = this.provider.target().request(MediaType.APPLICATION_XML).get();
         assertThat(response.getStatus(), is(200));
         String payload = response.readEntity(String.class);
+        System.out.println("payload " + payload);
         assertTrue(payload.startsWith("hey"));
     }
 
