@@ -2,6 +2,7 @@ package com.airhacks.doit.business.reminders.boundary;
 
 import com.airhacks.rulz.jaxrsclient.JAXRSClientProvider;
 import static com.airhacks.rulz.jaxrsclient.JAXRSClientProvider.buildWithURI;
+import javax.json.JsonObject;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import static org.hamcrest.CoreMatchers.is;
@@ -21,11 +22,11 @@ public class TodosResourceIT {
 
     @Test
     public void fetchToDos() {
-        Response response = this.provider.target().request(MediaType.APPLICATION_XML).get();
+        Response response = this.provider.target().request(MediaType.APPLICATION_JSON).get();
         assertThat(response.getStatus(), is(200));
-        String payload = response.readEntity(String.class);
+        JsonObject payload = response.readEntity(JsonObject.class);
         System.out.println("payload " + payload);
-        assertTrue(payload.startsWith("hey"));
+        assertTrue(payload.getString("caption").startsWith("implement"));
     }
 
 }
