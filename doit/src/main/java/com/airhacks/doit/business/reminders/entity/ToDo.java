@@ -38,4 +38,20 @@ public class ToDo {
     public ToDo() {
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public String getCaption() {
+        return caption;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getPriority() {
+        return priority;
+    }
+
 }

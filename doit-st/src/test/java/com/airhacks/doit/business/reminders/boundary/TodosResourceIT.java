@@ -34,7 +34,9 @@ public class TodosResourceIT {
                 build();
         Response postResponse = this.provider.target().request().
                 post(Entity.json(todoToCreate));
-        assertThat(postResponse.getStatus(), is(204));
+        assertThat(postResponse.getStatus(), is(201));
+        String location = postResponse.getHeaderString("Location");
+        System.out.println("location = " + location);
 
         Response response = this.provider.target().
                 request(MediaType.APPLICATION_JSON).

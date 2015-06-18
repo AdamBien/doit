@@ -31,8 +31,8 @@ public class ToDoManager {
                 getResultList();
     }
 
-    public void save(ToDo todo) {
-        this.em.merge(todo);
+    public ToDo save(ToDo todo) {
+        return this.em.merge(todo);
     }
 
 }
