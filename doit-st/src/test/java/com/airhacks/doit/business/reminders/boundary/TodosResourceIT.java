@@ -32,29 +32,41 @@ public class TodosResourceIT {
                 add("caption", "implement").
                 add("priority", 42).
                 build();
+
+        //create
         Response postResponse = this.provider.target().request().
                 post(Entity.json(todoToCreate));
         assertThat(postResponse.getStatus(), is(201));
         String location = postResponse.getHeaderString("Location");
         System.out.println("location = " + location);
 
+        //find
         JsonObject dedicatedTodo = this.provider.client().
                 target(location).
                 request(MediaType.APPLICATION_JSON).
                 get(JsonObject.class);
         assertTrue(dedicatedTodo.getString("caption").contains("implement"));
 
+        //update
         JsonObjectBuilder updateBuilder = Json.createObjectBuilder();
         JsonObject updated = updateBuilder.
                 add("caption", "implemented").
-                add("priority", 42).
                 build();
 
         this.provider.client().
                 target(location).
-                request(MediaType.APPLICATION_JSON).
-                put(Entity.json(updated));
+                request(MediaType.APPLICATION_JSON)
+                .put(Entity.json(updated));
 
+        //find it again
+        //find
+        JsonObject updatedTodo = this.provider.client().
+                target(location).
+                request(MediaType.APPLICATION_JSON).
+                get(JsonObject.class);
+        assertTrue(updatedTodo.getString("caption").contains("implemented"));
+
+        //findAll
         Response response = this.provider.target().
                 request(MediaType.APPLICATION_JSON).
                 get();
@@ -66,6 +78,7 @@ public class TodosResourceIT {
         JsonObject todo = allTodos.getJsonObject(0);
         assertTrue(todo.getString("caption").startsWith("impl"));
 
+        //deleting not-existing
         Response deleteResponse = this.provider.target().
                 path("42").
                 request(MediaType.APPLICATION_JSON).delete();

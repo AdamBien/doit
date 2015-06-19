@@ -40,9 +40,9 @@ public class TodosResource {
 
     @PUT
     @Path("{id}")
-    public ToDo update(@PathParam("id") long id, ToDo todo) {
+    public ToDo delete(@PathParam("id") long id, ToDo todo) {
         todo.setId(id);
-        return this.manager.save(todo);
+        return manager.save(todo);
     }
 
     @GET
