@@ -44,6 +44,17 @@ public class TodosResourceIT {
                 get(JsonObject.class);
         assertTrue(dedicatedTodo.getString("caption").contains("implement"));
 
+        JsonObjectBuilder updateBuilder = Json.createObjectBuilder();
+        JsonObject updated = updateBuilder.
+                add("caption", "implemented").
+                add("priority", 42).
+                build();
+
+        this.provider.client().
+                target(location).
+                request(MediaType.APPLICATION_JSON).
+                put(Entity.json(updated));
+
         Response response = this.provider.target().
                 request(MediaType.APPLICATION_JSON).
                 get();
