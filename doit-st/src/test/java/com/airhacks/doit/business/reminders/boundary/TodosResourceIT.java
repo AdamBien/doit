@@ -38,6 +38,12 @@ public class TodosResourceIT {
         String location = postResponse.getHeaderString("Location");
         System.out.println("location = " + location);
 
+        JsonObject dedicatedTodo = this.provider.client().
+                target(location).
+                request(MediaType.APPLICATION_JSON).
+                get(JsonObject.class);
+        assertTrue(dedicatedTodo.getString("caption").contains("implement"));
+
         Response response = this.provider.target().
                 request(MediaType.APPLICATION_JSON).
                 get();
@@ -48,13 +54,6 @@ public class TodosResourceIT {
 
         JsonObject todo = allTodos.getJsonObject(0);
         assertTrue(todo.getString("caption").startsWith("impl"));
-
-        //GET with id
-        JsonObject dedicatedTodo = this.provider.target().
-                path("42").
-                request(MediaType.APPLICATION_JSON).
-                get(JsonObject.class);
-        assertTrue(dedicatedTodo.getString("caption").contains("42"));
 
         Response deleteResponse = this.provider.target().
                 path("42").

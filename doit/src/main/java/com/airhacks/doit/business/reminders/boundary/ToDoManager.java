@@ -4,6 +4,7 @@ import com.airhacks.doit.business.reminders.entity.ToDo;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -22,8 +23,12 @@ public class ToDoManager {
     }
 
     public void delete(long id) {
-        ToDo reference = this.em.getReference(ToDo.class, id);
-        this.em.remove(reference);
+        try {
+            ToDo reference = this.em.getReference(ToDo.class, id);
+            this.em.remove(reference);
+        } catch (EntityNotFoundException e) {
+            //we want to remove it...
+        }
     }
 
     public List<ToDo> all() {
