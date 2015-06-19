@@ -66,6 +66,26 @@ public class TodosResourceIT {
                 get(JsonObject.class);
         assertTrue(updatedTodo.getString("caption").contains("implemented"));
 
+        //update status
+        //update
+        JsonObjectBuilder statusBuilder = Json.createObjectBuilder();
+        JsonObject status = statusBuilder.
+                add("done", true).
+                build();
+
+        this.provider.client().
+                target(location).
+                path("status").
+                request(MediaType.APPLICATION_JSON)
+                .put(Entity.json(status));
+
+        //verify status
+        updatedTodo = this.provider.client().
+                target(location).
+                request(MediaType.APPLICATION_JSON).
+                get(JsonObject.class);
+        assertThat(updatedTodo.getBoolean("done"), is(true));
+
         //findAll
         Response response = this.provider.target().
                 request(MediaType.APPLICATION_JSON).

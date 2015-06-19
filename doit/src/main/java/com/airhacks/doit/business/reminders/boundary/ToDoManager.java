@@ -40,4 +40,10 @@ public class ToDoManager {
         return this.em.merge(todo);
     }
 
+    public ToDo updateStatus(long id, boolean done) {
+        ToDo todo = this.findById(id);
+        todo.setDone(done);
+        return todo;
+    }
+
 }

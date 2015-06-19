@@ -5,6 +5,7 @@ import java.net.URI;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.json.JsonObject;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -43,6 +44,13 @@ public class TodosResource {
     public ToDo delete(@PathParam("id") long id, ToDo todo) {
         todo.setId(id);
         return manager.save(todo);
+    }
+
+    @PUT
+    @Path("{id}/status")
+    public ToDo statusUpdate(@PathParam("id") long id, JsonObject statusUpdate) {
+        boolean done = statusUpdate.getBoolean("done");
+        return manager.updateStatus(id, done);
     }
 
     @GET
