@@ -22,7 +22,7 @@ import javax.ws.rs.core.UriInfo;
  */
 @Stateless
 @Path("todos")
-public class TodosResource {
+public class ToDosResource {
 
     @Inject
     ToDoManager manager;
