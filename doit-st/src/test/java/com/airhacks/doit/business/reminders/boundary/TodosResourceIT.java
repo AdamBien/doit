@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.Rule;
@@ -70,7 +71,10 @@ public class TodosResourceIT {
                 target(location).
                 request(MediaType.APPLICATION_JSON)
                 .put(Entity.json(updated));
-        assertThat(updateResponse.getStatus(), is(200));
+        assertThat(updateResponse.getStatus(), is(409));
+        String conflictInformation = updateResponse.getHeaderString("cause");
+        assertNotNull(conflictInformation);
+        System.out.println("conflictInformation = " + conflictInformation);
 
         //find it again
         //find
