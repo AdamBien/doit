@@ -1,5 +1,7 @@
 package com.airhacks.doit.business.reminders.entity;
 
+import com.airhacks.doit.business.CrossCheck;
+import com.airhacks.doit.business.ValidEntity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -19,7 +21,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQuery(name = ToDo.findAll, query = "SELECT t FROM ToDo t")
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-public class ToDo {
+@CrossCheck
+public class ToDo implements ValidEntity {
 
     @Id
     @GeneratedValue
@@ -73,6 +76,11 @@ public class ToDo {
 
     public void setDone(boolean done) {
         this.done = done;
+    }
+
+    @Override
+    public boolean isValid() {
+        return (this.priority > 10 && this.description != null);
     }
 
 }
