@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Version;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -26,6 +28,8 @@ public class ToDo {
     static final String PREFIX = "reminders.entity.ToDo.";
     public static final String findAll = PREFIX + "findAll";
 
+    @NotNull
+    @Size(min = 1, max = 256)
     private String caption;
     private String description;
     private int priority;
