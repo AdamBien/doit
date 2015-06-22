@@ -153,4 +153,32 @@ public class TodosResourceIT {
 
     }
 
+    @Test
+    public void createToDoWithoutCaption() {
+        JsonObjectBuilder todoBuilder = Json.createObjectBuilder();
+        JsonObject todoToCreate = todoBuilder.
+                add("priority", 42).
+                build();
+
+        Response postResponse = this.provider.target().request().
+                post(Entity.json(todoToCreate));
+        assertThat(postResponse.getStatus(), is(400));
+        postResponse.getHeaders().entrySet().forEach(System.out::println);
+
+    }
+
+    @Test
+    public void createValidToDo() {
+        JsonObjectBuilder todoBuilder = Json.createObjectBuilder();
+        JsonObject todoToCreate = todoBuilder.
+                add("caption", "12").
+                add("priority", 42).
+                build();
+
+        Response postResponse = this.provider.target().request().
+                post(Entity.json(todoToCreate));
+        assertThat(postResponse.getStatus(), is(201));
+
+    }
+
 }
