@@ -53,10 +53,24 @@ public class TodosResourceIT {
                 add("caption", "implemented").
                 build();
 
-        this.provider.client().
+        Response updateResponse = this.provider.client().
                 target(location).
                 request(MediaType.APPLICATION_JSON)
                 .put(Entity.json(updated));
+        assertThat(updateResponse.getStatus(), is(200));
+
+        //update again
+        updateBuilder = Json.createObjectBuilder();
+        updated = updateBuilder.
+                add("caption", "implemented").
+                add("priority", 42).
+                build();
+
+        updateResponse = this.provider.client().
+                target(location).
+                request(MediaType.APPLICATION_JSON)
+                .put(Entity.json(updated));
+        assertThat(updateResponse.getStatus(), is(200));
 
         //find it again
         //find
