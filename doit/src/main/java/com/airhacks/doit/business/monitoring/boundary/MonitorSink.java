@@ -2,6 +2,9 @@ package com.airhacks.doit.business.monitoring.boundary;
 
 import com.airhacks.doit.business.logging.boundary.LogSink;
 import com.airhacks.doit.business.monitoring.entity.CallEvent;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import javax.annotation.PostConstruct;
 import javax.ejb.ConcurrencyManagement;
 import javax.ejb.ConcurrencyManagementType;
 import javax.ejb.Singleton;
@@ -19,8 +22,20 @@ public class MonitorSink {
     @Inject
     LogSink LOG;
 
+    CopyOnWriteArrayList<CallEvent> recentEvents;
+
+    @PostConstruct
+    public void init() {
+        this.recentEvents = new CopyOnWriteArrayList<>();
+    }
+
     public void onCallEvent(@Observes CallEvent event) {
         LOG.log(event.toString());
+        this.recentEvents.add(event);
+    }
+
+    public List<CallEvent> getRecentEvents() {
+        return this.recentEvents;
     }
 
 }
