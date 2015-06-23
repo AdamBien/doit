@@ -31,7 +31,7 @@ public class TodosResourceIT {
         JsonObjectBuilder todoBuilder = Json.createObjectBuilder();
         JsonObject todoToCreate = todoBuilder.
                 add("caption", "implement").
-                add("priority", 42).
+                add("priority", 10).
                 build();
 
         //create
