@@ -95,7 +95,7 @@ public class ToDo implements ValidEntity {
         if (this.priority <= 10) {
             return true;
         }
-        return (this.description != null);
+        return (this.description != null && !this.description.isEmpty());
     }
 
 }

@@ -2,9 +2,14 @@ package com.airhacks.doit.presentation;
 
 import com.airhacks.doit.business.reminders.boundary.ToDoManager;
 import com.airhacks.doit.business.reminders.entity.ToDo;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
 
 /**
  *
@@ -18,6 +23,9 @@ public class Index {
 
     ToDo todo;
 
+    @Inject
+    Validator validator;
+
     @PostConstruct
     public void init() {
         this.todo = new ToDo();
@@ -27,8 +35,20 @@ public class Index {
         return todo;
     }
 
+    public void showValidationError(String content) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_WARN, content, content);
+        FacesContext.getCurrentInstance().addMessage("", message);
+
+    }
+
     public Object save() {
-        this.boundary.save(todo);
+        Set<ConstraintViolation<ToDo>> violations = this.validator.validate(this.todo);
+        for (ConstraintViolation<ToDo> violation : violations) {
+            this.showValidationError(violation.getMessage());
+        }
+        if (violations.isEmpty()) {
+            this.boundary.save(todo);
+        }
         return null;
     }
 
