@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:jsf="http://xmlns.jcp.org/jsf"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -13,7 +14,13 @@
             Caption: <input jsf:id="caption" placeholder="Enter the caption" type="text" value="#{index.todo.caption}"/>
             Description: <p:inputText value="#{index.todo.description}"/>
             Priority: <p:inputText value="#{index.todo.priority}"/>
-            <p:commandButton value="Save" action="#{index.save}" update="growl"/>
+            <p:commandButton value="Save" action="#{index.save}" update="growl,reminders"/>
+            <p:dataList value="#{index.toDos}" var="todo" type="ordered" id="reminders">
+                <f:facet name="header">
+                    Reminders
+                </f:facet>
+                #{todo.caption}, #{todo.description}, #{todo.priority}
+            </p:dataList>
         </h:form>
     </h:body>
 </html>

@@ -2,6 +2,7 @@ package com.airhacks.doit.presentation;
 
 import com.airhacks.doit.business.reminders.boundary.ToDoManager;
 import com.airhacks.doit.business.reminders.entity.ToDo;
+import java.util.List;
 import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.enterprise.inject.Model;
@@ -33,6 +34,10 @@ public class Index {
 
     public ToDo getTodo() {
         return todo;
+    }
+
+    public List<ToDo> getToDos() {
+        return this.boundary.all();
     }
 
     public void showValidationError(String content) {
