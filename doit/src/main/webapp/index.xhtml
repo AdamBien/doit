@@ -9,12 +9,12 @@
     </h:head>
     <h:body>
         <h:form>
+            <p:growl id="growl" life="2000" />
             Caption: <input jsf:id="caption" placeholder="Enter the caption" type="text" value="#{index.todo.caption}"/>
             Description: <p:inputText value="#{index.todo.description}"/>
             Priority: <p:inputText value="#{index.todo.priority}"/>
-            <p:commandButton value="Save" action="#{index.save}"/>
+            <p:commandButton value="Save" action="#{index.save}" update="growl"/>
         </h:form>
-        #{index.toDos}
     </h:body>
 </html>
 
