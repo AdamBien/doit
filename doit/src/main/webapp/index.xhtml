@@ -7,13 +7,18 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Facelet Title</title>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
     </h:head>
     <h:body>
-        <h:form>
+        <h:form prependId="false">
             <p:growl id="growl" life="2000" />
-            Caption: <input jsf:id="caption" placeholder="Enter the caption" type="text" value="#{index.todo.caption}"/>
-            Description: <p:inputText value="#{index.todo.description}"/>
-            Priority: <p:inputText value="#{index.todo.priority}"/>
+            <span class="label label-info">Reminders</span>
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputText value="Caption:"/> <input jsf:id="caption" placeholder="Enter the caption" type="text" value="#{index.todo.caption}" class="form-control"/>
+                <h:outputText value="Description:"/> <p:inputText value="#{index.todo.description}"/>
+                <h:outputText value="Priority:"/> <p:inputText value="#{index.todo.priority}"/>
+            </h:panelGrid>
             <p:commandButton value="Save" action="#{index.save}" update="growl,reminders"/>
             <p:dataList value="#{index.toDos}" var="todo" type="ordered" id="reminders">
                 <f:facet name="header">
