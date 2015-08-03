@@ -3,6 +3,7 @@ package com.airhacks.doit.business.reminders.entity;
 import com.airhacks.doit.business.CrossCheck;
 import com.airhacks.doit.business.ValidEntity;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
@@ -22,6 +23,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @CrossCheck
+@EntityListeners(ToDoAuditor.class)
 public class ToDo implements ValidEntity {
 
     @Id
