@@ -1,4 +1,4 @@
-package com.airhacks.doit.business.reminders.boundary;
+package com.airhacks.doit.business.encoders;
 
 import java.io.IOException;
 import java.io.Writer;

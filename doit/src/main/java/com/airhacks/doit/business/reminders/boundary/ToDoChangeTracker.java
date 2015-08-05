@@ -1,5 +1,6 @@
 package com.airhacks.doit.business.reminders.boundary;
 
+import com.airhacks.doit.business.encoders.JsonEncoder;
 import com.airhacks.doit.business.reminders.entity.ToDo;
 import java.io.IOException;
 import javax.ejb.ConcurrencyManagement;
