@@ -3,6 +3,9 @@ package com.airhacks.doit.business.reminders.boundary;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Arrays;
+import javax.json.JsonObject;
+import javax.websocket.ClientEndpointConfig;
 import javax.websocket.ContainerProvider;
 import javax.websocket.DeploymentException;
 import javax.websocket.WebSocketContainer;
@@ -24,12 +27,15 @@ public class ToDoChangeTrackerIT {
         this.container = ContainerProvider.getWebSocketContainer();
         URI uri = new URI("ws://localhost:41725/doit/changes");
         this.listener = new ChangesListener();
-        this.container.connectToServer(this.listener, uri);
+        ClientEndpointConfig cec = ClientEndpointConfig.Builder.create().
+                decoders(Arrays.asList(JsonDecoder.class)).
+                build();
+        this.container.connectToServer(this.listener, cec, uri);
     }
 
     @Test
     public void receiveNotifications() throws InterruptedException {
-        String message = this.listener.getMessage();
+        JsonObject message = this.listener.getMessage();
         assertNotNull(message);
         System.out.println(" " + message);
     }
