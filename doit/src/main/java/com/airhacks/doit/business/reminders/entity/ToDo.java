@@ -1,7 +1,7 @@
 package com.airhacks.doit.business.reminders.entity;
 
 import com.airhacks.doit.business.validation.CrossCheck;
-import com.airhacks.doit.business.ValidEntity;
+import com.airhacks.doit.business.validation.ValidEntity;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;

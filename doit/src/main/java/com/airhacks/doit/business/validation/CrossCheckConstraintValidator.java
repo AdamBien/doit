@@ -1,6 +1,5 @@
 package com.airhacks.doit.business.validation;
 
-import com.airhacks.doit.business.ValidEntity;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
