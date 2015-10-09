@@ -9,6 +9,7 @@ import javax.json.JsonObjectBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -47,11 +48,14 @@ public class TodosResourceIT {
                 request(MediaType.APPLICATION_JSON).
                 get(JsonObject.class);
         assertTrue(dedicatedTodo.getString("caption").contains("implement"));
+        assertThat(dedicatedTodo.keySet(), hasItem("version"));
+        long version = dedicatedTodo.getJsonNumber("version").longValue();
 
         //update
         JsonObjectBuilder updateBuilder = Json.createObjectBuilder();
         JsonObject updated = updateBuilder.
                 add("caption", "implemented").
+                add("version", version).
                 build();
 
         Response updateResponse = this.provider.client().
