@@ -20,6 +20,8 @@ public class BoundaryLogger {
         long start = System.currentTimeMillis();
         try {
             return ic.proceed();
+        } catch (Exception ex) {
+            throw ex;
         } finally {
             long duration = System.currentTimeMillis() - start;
             monitoring.fire(new CallEvent(ic.getMethod().getName(), duration));
