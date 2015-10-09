@@ -23,7 +23,7 @@ public class ToDoResource {
     }
 
     @PUT
-    public ToDo delete(ToDo todo) {
+    public ToDo save(ToDo todo) {
         todo.setId(id);
         return manager.save(todo);
     }
