@@ -16,19 +16,17 @@ public class EJBExceptionMapper implements ExceptionMapper<EJBException> {
     @Override
     public Response toResponse(EJBException ex) {
         Throwable cause = ex.getCause();
-        Response unknownError = Response.serverError().
-                header("cause", ex.toString()).build();
-        if (cause == null) {
-            return unknownError;
-        }
-
         if (cause instanceof OptimisticLockException) {
+            OptimisticLockException actual = (OptimisticLockException) cause;
             return Response.status(Response.Status.CONFLICT).
-                    header("cause", "conflict occured: " + cause).
+                    header("cause", "conflict cause by entity: " + actual.getEntity()).
+                    header("additional-info", actual.getMessage()).
                     build();
+
         }
 
-        return unknownError;
+        return Response.serverError().
+                header("cause", ex.toString()).build();
     }
 
 }
